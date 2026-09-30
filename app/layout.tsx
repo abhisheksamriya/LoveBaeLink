@@ -12,6 +12,9 @@ export const metadata: Metadata = {
     title: "LoveBaeLink 💌 | Big love in a tiny link",
     description: "Make your favourite boy smile instantly. Create a cute digital surprise card for him! ✨",
     type: "website",
+  },
+  icons:{
+    icon: '/logo.png'
   }
 };
 

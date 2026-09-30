@@ -52,7 +52,6 @@ export default function LoveMeter({ boyfriendName, onComplete }: { boyfriendName
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center w-full mt-2 font-[Quicksand]">
       
-      {/* 1. WELCOME HEADER & GREETING */}
       <h2 className="text-3xl font-[Caveat] text-pink-500 mb-2 font-bold text-center mt-4">
         Love Meter 💖
       </h2>
@@ -60,7 +59,6 @@ export default function LoveMeter({ boyfriendName, onComplete }: { boyfriendName
         Hey {boyfriendName}, tap the button and fill my heart up 🥰
       </p>
 
-      {/* 2. LIVE COUNTDOWN TIMER CARD */}
       <div className="bg-pink-50/60 border border-dashed border-pink-200 rounded-2xl p-4 w-full max-w-[320px] mb-4 shadow-sm flex flex-col items-center">
         <h3 className="text-pink-500 font-bold text-center mb-3 text-sm flex items-center gap-2">
           🎀Happy Boyfriend's Day cutie 🎀
