@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export default function LoveMeter({ boyfriendName, onComplete }: { boyfriendName: string, onComplete: () => void }) {
   const [progress, setProgress] = useState(0);
@@ -83,7 +84,15 @@ export default function LoveMeter({ boyfriendName, onComplete }: { boyfriendName
           transition={{ type: "spring", bounce: 0.5 }}
           className="bg-white p-3 pb-10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-sm border border-gray-100 mb-8 relative"
         >
-          <img src={currentContent.gif} alt="Love gif" className="w-36 h-36 object-cover border border-gray-100 rounded-sm" />
+          <Image
+                src={currentContent.gif} 
+                alt={currentContent.text}
+                width={160} 
+                height={160} 
+                priority 
+                unoptimized 
+                className="w-36 h-36 object-cover border border-gray-100 rounded-sm" 
+              />
           <div className="absolute bottom-2 left-0 w-full text-center text-pink-400 text-lg font-[Caveat] font-bold">
             {stage === 3 ? "Perfect!" : "Keep going..."}
           </div>

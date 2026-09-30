@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 
 export default function YesNoTrick({ onYes }: { onYes: () => void }) {
   const [showAngry, setShowAngry] = useState(false);
@@ -27,9 +28,13 @@ export default function YesNoTrick({ onYes }: { onYes: () => void }) {
               transition={{ repeat: Infinity, duration: 3, repeatType: "reverse", ease: "easeInOut" }}
               className="bg-white p-3 pb-10 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-sm border border-gray-100 mb-6 relative"
             >
-              <img 
+            <Image 
                 src="/surprise.gif" 
                 alt="Gift" 
+                width={160} 
+                height={160} 
+                priority 
+                unoptimized 
                 className="w-40 h-40 object-cover border border-gray-50 rounded-sm" 
               />
               <p className="absolute bottom-2 left-0 w-full text-center text-pink-400 font-[Caveat] font-bold text-xl">
@@ -73,9 +78,13 @@ export default function YesNoTrick({ onYes }: { onYes: () => void }) {
               transition={{ duration: 0.4 }}
               className="bg-white p-3 pb-10 shadow-[0_8px_30px_rgb(239,68,68,0.2)] rounded-sm border border-gray-100 mb-6 relative -rotate-3"
             >
-              <img 
+            <Image 
                 src="/bully.gif" 
                 alt="Angry" 
+                width={160} 
+                height={160} 
+                priority // Preload in background automatically!
+                unoptimized // Let the original GIF play
                 className="w-40 h-40 object-cover border border-gray-50 rounded-sm" 
               />
               <p className="absolute bottom-2 left-0 w-full text-center text-red-400 font-[Caveat] font-bold text-xl">
