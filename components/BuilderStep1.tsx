@@ -33,15 +33,15 @@ export default function BuilderStep1({ formData, onChange, onNext }: BuilderStep
   return (
     <div className="flex flex-col gap-4 w-full items-center font-[Quicksand] relative z-10">
       
-      <h1 className="text-4xl text-pink-500 font-[Caveat] text-center mb-1 font-bold">
+      <h1 className="text-3xl text-pink-500 font-[Caveat] text-center mb-1 font-bold">
         Happy Boyfriend's Day
       </h1>
       <p className="text-center text-gray-500 text-sm mb-2">
         Let's make a cute love card for him 💌
       </p>
 
-      {/* COUNTDOWN TIMER */}
-      <div className="w-full bg-pink-50/80 border border-pink-100 rounded-2xl p-4 mb-2 shadow-sm">
+      {/* countdown */}
+      <div className="w-full bg-pink-50/80 border border-pink-100 rounded-2xl p-3.5 mb-2 shadow-sm">
         <h3 className="text-center text-pink-600 font-bold text-sm mb-3 flex items-center justify-center gap-2">
           🎀 Boyfriend's Day · 3rd October 🎀
         </h3>
@@ -52,8 +52,8 @@ export default function BuilderStep1({ formData, onChange, onNext }: BuilderStep
             { label: 'min', value: timeLeft.m },
             { label: 'sec', value: timeLeft.s }
           ].map((time, i) => (
-            <div key={i} className="flex flex-col items-center bg-white w-16 py-2 rounded-xl shadow-sm border border-pink-50">
-              <span className="text-xl font-bold text-pink-500">{time.value.toString().padStart(2, '0')}</span>
+            <div key={i} className="flex flex-col items-center bg-white w-15 py-2 rounded-xl shadow-sm border border-pink-50">
+              <span className="text-lg font-bold text-pink-500">{time.value.toString().padStart(2, '0')}</span>
               <span className="text-[10px] text-gray-400 uppercase font-bold tracking-wider">{time.label}</span>
             </div>
           ))}
@@ -62,13 +62,13 @@ export default function BuilderStep1({ formData, onChange, onNext }: BuilderStep
 
       <div className="w-full">
         <input type="text" name="userName" placeholder="Your Name (e.g. Diya)" value={formData.userName} onChange={onChange}
-          className="w-full border-2 border-pink-100 rounded-2xl p-4 focus:outline-none focus:border-pink-400 bg-pink-50/50 text-gray-800 font-semibold"
+          className="w-full border-2 border-pink-100 rounded-2xl px-3 py-2 focus:outline-none focus:border-pink-400 bg-pink-50/50 text-gray-800 font-semibold"
         />
       </div>
 
       <div className="w-full">
         <input type="text" name="boyfriendName" placeholder="His Name (e.g. Aman)" value={formData.boyfriendName} onChange={onChange}
-          className="w-full border-2 border-pink-100 rounded-2xl p-4 focus:outline-none focus:border-pink-400 bg-pink-50/50 text-gray-800 font-semibold"
+          className="w-full border-2 border-pink-100 rounded-2xl px-3 py-2 focus:outline-none focus:border-pink-400 bg-pink-50/50 text-gray-800 font-semibold"
         />
       </div>
 
@@ -78,7 +78,7 @@ export default function BuilderStep1({ formData, onChange, onNext }: BuilderStep
         />
       </div>
 
-      <button onClick={onNext} className="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 px-4 rounded-full mt-2 shadow-xl shadow-pink-200 transition-transform active:scale-95 flex justify-center items-center gap-2 text-lg">
+      <button onClick={onNext} className="w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-2.5 px-3 rounded-full mt-2 shadow-xl shadow-pink-200 transition-transform active:scale-95 flex justify-center items-center gap-2 text-lg">
         Create Card <Heart size={20} className="fill-white" />
       </button>
     </div>
