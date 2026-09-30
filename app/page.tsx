@@ -18,13 +18,7 @@ export default function Home() {
   const [previewStep, setPreviewStep] = useState(0); // For Demo Flow
   const [formData, setFormData] = useState({
     userName: "", boyfriendName: "", 
-    loveNote: `To my favorite boy ❤️
-
-Happy Boyfriend’s Day, my love! Having you in my life is like taking a deep breath of fresh air. You are my peace, my safest space, and my absolute best friend.
-
-Thank you for every smile you bring to my face, every hug that makes everything better, and all the quiet moments that mean the world to me. Loving you is the easiest thing I’ve ever done.
-
-Yours, always`,
+    loveNote: `Happy Boyfriend's Day, my love ❤️! You are my peace, my best friend, and my biggest cheerleader. Life is so much softer and sweeter with you in it`,
   });
   const [utr, setUtr] = useState("");
   const [generatedLink, setGeneratedLink] = useState("");
