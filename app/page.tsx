@@ -1,69 +1,124 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Copy, CheckCircle } from "lucide-react";
+import Link from "next/link";
+import BuilderStep1 from "@/components/BuilderStep1";
+import BuilderStep2 from "@/components/BuilderStep2";
+import LoveMeter from "@/components/LoveMeter";
+import YesNoTrick from "@/components/YesNoTrick";
+import BalloonPop from "@/components/BalloonPop";
+import Certificate from "@/components/Certificate";
+import { db } from "@/lib/firebase";
+import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore";
 
 export default function Home() {
+  const [step, setStep] = useState(1);
+  const [previewStep, setPreviewStep] = useState(0); // For Demo Flow
+  const [formData, setFormData] = useState({
+    userName: "", boyfriendName: "", 
+    loveNote: `To my favorite boy ❤️
+
+Happy Boyfriend’s Day, my love! Having you in my life is like taking a deep breath of fresh air. You are my peace, my safest space, and my absolute best friend.
+
+Thank you for every smile you bring to my face, every hug that makes everything better, and all the quiet moments that mean the world to me. Loving you is the easiest thing I’ve ever done.
+
+Yours, always`,
+  });
+  const [utr, setUtr] = useState("");
+  const [generatedLink, setGeneratedLink] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleStartPreview = () => {
+    if (!formData.userName || !formData.boyfriendName) {
+      alert("Please fill in both names to see the preview 💌"); return;
+    }
+    setStep(2); 
+    setPreviewStep(0);
+  };
+
+  const handlePaymentVerify = async () => {
+    if (utr.length !== 12 || !/^\d{12}$/.test(utr)) { alert("❌ Enter valid 12-digit UTR."); return; }
+    if (/^(\d)\1+$/.test(utr) || utr === "123456789012") { alert("❌ Invalid UTR pattern."); return; }
+    setIsSaving(true);
+    try {
+      const q = query(collection(db, "gifts"), where("utr", "==", utr));
+      if (!(await getDocs(q)).empty) { alert("❌ UTR already used!"); setIsSaving(false); return; }
+
+      const uniqueId = Math.random().toString(36).substring(2, 8);
+      await setDoc(doc(db, "gifts", uniqueId), { ...formData, utr, paid: false, createdAt: new Date() });
+      setGeneratedLink(`${window.location.origin}/gift/${uniqueId}`);
+      setStep(4);
+    } catch (e) { alert("Error saving"); } finally { setIsSaving(false); }
+  };
+
+  const copyToClipboard = () => {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(generatedLink);
+    } else {
+      let textArea = document.createElement("textarea");
+      textArea.value = generatedLink;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+    <div className="min-h-svh bg-pink-50 p-4 flex flex-col items-center justify-center relative w-full h-full bg-checkers">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-sm bg-white/95 backdrop-blur-sm p-6 rounded-3xl shadow-2xl border-[6px] border-white/50 relative z-10 min-h-125 flex flex-col justify-center">
+        
+        {step === 1 && <BuilderStep1 formData={formData} onChange={handleChange} onNext={handleStartPreview} />}
+
+        {/* preview */}
+        {step === 2 && (
+          <div className="w-full flex flex-col items-center relative">
+            <div className="absolute -top-10 bg-purple-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest animate-pulse">
+              Preview Mode 👀
+            </div>
+            {previewStep === 0 && <LoveMeter boyfriendName={formData.boyfriendName} onComplete={() => setPreviewStep(1)} />}
+            {previewStep === 1 && <YesNoTrick onYes={() => setPreviewStep(2)} />}
+            {previewStep === 2 && <BalloonPop loveNote={formData.loveNote} onComplete={() => setPreviewStep(3)} />}
+            {previewStep === 3 && (
+              <div className="w-full flex flex-col items-center">
+                <Certificate userName={formData.userName} boyfriendName={formData.boyfriendName} loveNote={formData.loveNote} />
+                <button onClick={() => setStep(3)} className="mt-8 w-full bg-pink-500 hover:bg-pink-600 text-white font-bold py-4 rounded-full shadow-lg text-lg animate-bounce">
+                  Continue ✨
+                </button>
+                <p className="text-xs text-gray-400 mt-3 text-center">Click above to get your shareable link!</p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {step === 3 && <BuilderStep2 utr={utr} setUtr={setUtr} onBack={() => setStep(2)} onVerify={handlePaymentVerify} isSaving={isSaving} />}
+
+        {step === 4 && (
+          <div className="flex flex-col items-center text-center py-6 font-[Quicksand]">
+            <img src="https://media.tenor.com/7sH3P7f31nUAAAAi/mochi-cat.gif" alt="Happy" className="w-24 h-24 mb-2" />
+            <h2 className="text-3xl text-pink-500 font-[Caveat] mb-2 font-bold">Link is Ready!</h2>
+            <p className="text-gray-500 text-sm mb-2">Send this link to {formData.boyfriendName} 💕</p>
+            <p className="text-red-500 text-xs font-bold mb-6">(Activates in 5 mins after verification)</p>
+            
+            <div className="w-full flex items-center bg-gray-50 border border-pink-200 rounded-2xl p-2 mb-6 shadow-inner">
+              <input type="text" readOnly value={generatedLink} className="flex-1 bg-transparent text-sm text-gray-800 px-2 outline-none font-medium" />
+              <button onClick={copyToClipboard} className="bg-pink-100 text-pink-600 p-3 rounded-xl hover:bg-pink-200 transition">
+                <Copy size={20} />
+              </button>
+            </div>
+            {copied && <p className="text-pink-500 text-xs -mt-4 mb-4 font-bold">Copied to clipboard!</p>}
+          </div>
+        )}
+      </motion.div>
     </div>
   );
 }
