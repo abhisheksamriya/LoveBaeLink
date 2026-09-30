@@ -1,10 +1,34 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 export default function LoveMeter({ boyfriendName, onComplete }: { boyfriendName: string, onComplete: () => void }) {
   const [progress, setProgress] = useState(0);
+  
+  // COUNTDOWN TIMER LOGIC
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    // Target date for Boyfriend's Day (3rd October)
+    const targetDate = new Date("2026-10-03T00:00:00").getTime();
+
+    const interval = setInterval(() => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const handleTap = () => {
     if (progress < 100) setProgress(Math.min(progress + 20, 100));
@@ -28,9 +52,47 @@ export default function LoveMeter({ boyfriendName, onComplete }: { boyfriendName
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex flex-col items-center w-full mt-2 font-[Quicksand]">
       
-      <div className="relative w-full max-w-62.5 flex flex-col items-center justify-start mt-6">
+      {/* 1. WELCOME HEADER & GREETING */}
+      <h2 className="text-3xl font-[Caveat] text-pink-500 mb-2 font-bold text-center mt-4">
+        Love Meter 💖
+      </h2>
+      <p className="text-gray-600 font-bold mb-6 text-center px-4 text-sm">
+        Hey {boyfriendName}, tap the button and fill my heart up 🥰
+      </p>
+
+      {/* 2. LIVE COUNTDOWN TIMER CARD */}
+      <div className="bg-pink-50/60 border border-dashed border-pink-200 rounded-2xl p-4 w-full max-w-[320px] mb-4 shadow-sm flex flex-col items-center">
+        <h3 className="text-pink-500 font-bold text-center mb-3 text-sm flex items-center gap-2">
+          🎀Happy Boyfriend's Day cutie 🎀
+        </h3>
         
-        <div className="absolute top-21.25 w-full flex justify-between px-2 text-pink-300 text-xs font-bold">
+        <div className="flex justify-center gap-3 w-full mb-3">
+          <div className="flex flex-col items-center bg-white rounded-xl shadow-sm w-16 py-2 border border-pink-100">
+            <span className="text-xl font-black text-pink-500">{timeLeft.days}</span>
+            <span className="text-[10px] text-gray-400 font-bold uppercase">days</span>
+          </div>
+          <div className="flex flex-col items-center bg-white rounded-xl shadow-sm w-16 py-2 border border-pink-100">
+            <span className="text-xl font-black text-pink-500">{timeLeft.hours}</span>
+            <span className="text-[10px] text-gray-400 font-bold uppercase">hrs</span>
+          </div>
+          <div className="flex flex-col items-center bg-white rounded-xl shadow-sm w-16 py-2 border border-pink-100">
+            <span className="text-xl font-black text-pink-500">{timeLeft.minutes}</span>
+            <span className="text-[10px] text-gray-400 font-bold uppercase">min</span>
+          </div>
+          <div className="flex flex-col items-center bg-white rounded-xl shadow-sm w-16 py-2 border border-pink-100">
+            <span className="text-xl font-black text-pink-500">{timeLeft.seconds}</span>
+            <span className="text-[10px] text-gray-400 font-bold uppercase">sec</span>
+          </div>
+        </div>
+
+        <div className="bg-white/80 px-4 py-1 rounded-full text-xs font-bold text-pink-400 shadow-sm border border-pink-50">
+          {timeLeft.days} sleeps to go 🌙
+        </div>
+      </div>
+
+      <div className="relative w-full max-w-62.5 flex flex-col items-center justify-start mt-2">
+        
+        <div className="absolute top-25 w-full flex justify-between px-1 text-pink-300 text-sm font-bold">
           <span>0%</span>
           <span>100%</span>
         </div>
