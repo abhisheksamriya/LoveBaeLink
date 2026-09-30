@@ -11,7 +11,7 @@ export default function YouAreMy({ onComplete }: { onComplete: () => void }) {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring" }}
-          src="https://media.tenor.com/Z5v938R2kG0AAAAi/peach-goma.gif" 
+          src="/my.gif" 
           alt="Cute" 
           className="w-32 h-32 absolute z-10"
         />
