@@ -45,7 +45,7 @@ if (data.paid === false) {
         <div className="w-full max-w-sm bg-white/95 backdrop-blur-sm min-h-137.5 rounded-3xl shadow-2xl border-8 border-white/60 relative overflow-hidden flex flex-col items-center py-6">
           <div className="flex flex-col items-center justify-center h-full text-center p-6 mt-12 font-[Quicksand]">
             <img 
-              src="https://media.tenor.com/NFW81RjQk8AAAAAi/bubu-dudu-bubu.gif" 
+              src="/waiting.gif" 
               alt="Waiting" 
               className="w-32 h-32 mb-6"
             />

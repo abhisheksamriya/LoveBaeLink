@@ -8,7 +8,7 @@ export default function BuilderStep2({ utr, setUtr, onBack, onVerify, isSaving }
 
   return (
     <div className="flex flex-col items-center text-center py-2 w-full font-[Quicksand]">
-      <img src="https://media.tenor.com/Z5v938R2kG0AAAAi/peach-goma.gif" alt="Pay" className="w-24 h-24 mb-2" />
+      <img src="/money.gif" alt="Pay" className="w-24 h-24 mb-2" />
       <h2 className="text-3xl text-pink-500 font-[Caveat] mb-2 font-bold">Unlock Your Card</h2>
       <p className="text-gray-500 text-sm mb-6 px-4">Your card is ready! Just one tiny step to get the shareable link 💌</p>
       

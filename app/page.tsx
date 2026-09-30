@@ -98,7 +98,7 @@ export default function Home() {
 
         {step === 4 && (
           <div className="flex flex-col items-center text-center py-6 font-[Quicksand]">
-            <img src="https://media.tenor.com/7sH3P7f31nUAAAAi/mochi-cat.gif" alt="Happy" className="w-24 h-24 mb-2" />
+            <img src="/go.gif" alt="Happy" className="w-24 h-24 mb-2" />
             <h2 className="text-3xl text-pink-500 font-[Caveat] mb-2 font-bold">Link is Ready!</h2>
             <p className="text-gray-500 text-sm mb-2">Send this link to {formData.boyfriendName} 💕</p>
             <p className="text-red-500 text-xs font-bold mb-6">(Activates in 5 mins after verification)</p>
