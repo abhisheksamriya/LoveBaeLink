@@ -4,7 +4,18 @@ interface BuilderStep2Props {
 }
 
 export default function BuilderStep2({ utr, setUtr, onBack, onVerify, isSaving }: BuilderStep2Props) {
-const upiLink = "upi://pay?pa=BHARATPE2N0W0C8L1S29734@unitype&pn=Abhishek%20Samriya&am=1.00&cu=INR&tn=Boyfriend Day Card";
+const merchantVpa = "BHARATPE2N0W0C8L1S29734@unitype";
+
+const transactionRef = `BFCARD_${Date.now()}`;
+
+const upiLink =
+  `upi://pay?` +
+  `pa=${encodeURIComponent(merchantVpa)}` +
+  `&pn=${encodeURIComponent("Abhishek Samriya")}` +
+  `&tr=${encodeURIComponent(transactionRef)}` +
+  `&tn=${encodeURIComponent("Boyfriend Day Card")}` +
+  `&am=99.00` +
+  `&cu=INR`;
 
   return (
     <div className="flex flex-col items-center text-center py-2 w-full font-[Quicksand]">
