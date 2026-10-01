@@ -11,24 +11,16 @@ export default function FloatingHearts() {
   const hearts = Array.from({ length: 15 });
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden z-0">
-      {[...Array(10)].map((_, i) => (
-        <motion.span
+      {hearts.map((_, i) => (
+        <motion.div
           key={i}
-          className="absolute text-pink-400"
-          style={{
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            fontSize: `${Math.random() * 20 + 16}px`,
-          }}
-          animate={{ y: [0, -50], opacity: [1, 0] }}
-          transition={{
-            duration: 5,
-            repeat: Infinity,
-            delay: Math.random() * 2,
-          }}
+          className="absolute text-pink-400/30"
+          initial={{ y: "500%", x: `${Math.random() * 100}%`, opacity: 0, scale: 0.8 }}
+          animate={{ y: "-10%", opacity: [0, 1, 0], scale: [0.8, 1, 1.2] }}
+          transition={{ duration: 6 + Math.random() * 5, repeat: Infinity, delay: i * 0.4 }}
         >
-         <HeartIcon className="w-5 h-5" />
-        </motion.span>
+          <HeartIcon className="w-5 h-5" />
+        </motion.div>
       ))}
     </div>
   );
