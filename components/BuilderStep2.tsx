@@ -10,7 +10,7 @@ interface BuilderStep2Props {
 }
 
 export default function BuilderStep2({ utr, setUtr, onBack, onVerify, isSaving }: BuilderStep2Props) {
-  const razorpayLink = "https://rzp.io/rzp/xLKoElj";
+  const razorpayLink = "https://rzp.io/rzp/aLS4ZMD";
   
   const [hasClickedPay, setHasClickedPay] = useState(false);
 
