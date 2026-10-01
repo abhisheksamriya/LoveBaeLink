@@ -14,7 +14,7 @@ import { doc, setDoc, collection, query, where, getDocs } from "firebase/firesto
 
 export default function Home() {
   const [step, setStep] = useState(1);
-  const [previewStep, setPreviewStep] = useState(0); // For Demo Flow
+  const [previewStep, setPreviewStep] = useState(0); 
   const [formData, setFormData] = useState({
     userName: "", boyfriendName: "", 
     loveNote: `Happy Boyfriend's Day, my love ❤️! You are my peace, my best friend, and my biggest cheerleader. Life is so much softer and sweeter with you in it`,
@@ -75,7 +75,7 @@ export default function Home() {
         {/* preview */}
         {step === 2 && (
           <div className="w-full flex flex-col items-center relative">
-            <div className="absolute -top-10 bg-purple-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-widest animate-pulse">
+            <div className="absolute -top-10 bg-purple-600 text-white text-[10px] font-bold px-1 py-1 rounded-full uppercase tracking-widest animate-pulse">
               Preview Mode 👀
             </div>
             {previewStep === 0 && <LoveMeter boyfriendName={formData.boyfriendName} onComplete={() => setPreviewStep(1)} />}
