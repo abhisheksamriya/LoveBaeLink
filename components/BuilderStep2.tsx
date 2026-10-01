@@ -4,7 +4,7 @@ interface BuilderStep2Props {
 }
 
 export default function BuilderStep2({ utr, setUtr, onBack, onVerify, isSaving }: BuilderStep2Props) {
-const upiLink = "upi://pay?pa=lovebaelink@ybl&pn=Abhishek%20Samriya&am=99.00&cu=INR&tn=Boyfriend%20Day%20Card";
+const upiLink = "upi://pay?pa=6378322414@ybl&pn=LoveCard&am=99.00&cu=INR&tn=Boyfriend Day Card";
 
   return (
     <div className="flex flex-col items-center text-center py-2 w-full font-[Quicksand]">
