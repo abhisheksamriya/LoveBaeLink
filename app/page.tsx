@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Copy, CheckCircle } from "lucide-react";
-import Link from "next/link";
 import BuilderStep1 from "@/components/BuilderStep1";
 import BuilderStep2 from "@/components/BuilderStep2";
 import LoveMeter from "@/components/LoveMeter";
@@ -11,16 +10,16 @@ import YesNoTrick from "@/components/YesNoTrick";
 import BalloonPop from "@/components/BalloonPop";
 import Certificate from "@/components/Certificate";
 import { db } from "@/lib/firebase";
-import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore";
+import { doc, setDoc, collection } from "firebase/firestore"; 
 
 export default function Home() {
   const [step, setStep] = useState(1);
-  const [previewStep, setPreviewStep] = useState(0); // For Demo Flow
+  const [previewStep, setPreviewStep] = useState(0); 
   const [formData, setFormData] = useState({
     userName: "", boyfriendName: "", 
     loveNote: `Happy Boyfriend's Day, my love ❤️! You are my peace, my best friend, and my biggest cheerleader. Life is so much softer and sweeter with you in it`,
   });
-  const [utr, setUtr] = useState("");
+  const [utr, setUtr] = useState(""); // Ise rehne de taaki props mein error na aaye
   const [generatedLink, setGeneratedLink] = useState("");
   const [copied, setCopied] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -38,18 +37,23 @@ export default function Home() {
   };
 
   const handlePaymentVerify = async () => {
-    if (utr.length !== 12 || !/^\d{12}$/.test(utr)) { alert("❌ Enter valid 12-digit UTR."); return; }
-    if (/^(\d)\1+$/.test(utr) || utr === "123456789012") { alert("❌ Invalid UTR pattern."); return; }
     setIsSaving(true);
     try {
-      const q = query(collection(db, "gifts"), where("utr", "==", utr));
-      if (!(await getDocs(q)).empty) { alert("❌ UTR already used!"); setIsSaving(false); return; }
-
       const uniqueId = Math.random().toString(36).substring(2, 8);
-      await setDoc(doc(db, "gifts", uniqueId), { ...formData, utr, paid: false, createdAt: new Date() });
+      
+      await setDoc(doc(db, "gifts", uniqueId), { 
+        ...formData, 
+        paid: true, 
+        createdAt: new Date() 
+      });
+      
       setGeneratedLink(`${window.location.origin}/gift/${uniqueId}`);
       setStep(4);
-    } catch (e) { alert("Error saving"); } finally { setIsSaving(false); }
+    } catch (e) { 
+      alert("Error saving"); 
+    } finally { 
+      setIsSaving(false); 
+    }
   };
 
   const copyToClipboard = () => {
