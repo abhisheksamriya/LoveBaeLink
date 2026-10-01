@@ -43,7 +43,7 @@ export default function Home() {
       
       await setDoc(doc(db, "gifts", uniqueId), { 
         ...formData, 
-        paid: true, 
+        paid: false, 
         createdAt: new Date() 
       });
       
