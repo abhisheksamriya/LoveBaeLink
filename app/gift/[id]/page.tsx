@@ -29,11 +29,40 @@ export default function GiftPage(props: { params: Promise<{ id: string }> }) {
     return () => unsub(); 
   }, [giftId]);
 
-  // loading State
+// loading State
   if (!data) {
     return (
-      <div className="min-h-svh bg-pink-50 flex items-center justify-center">
-         <motion.div animate={{ scale: [1, 1.2, 1] }} transition={{ repeat: Infinity }} className="text-4xl">🤍</motion.div>
+      <div className="min-h-svh bg-pink-50 flex flex-col items-center justify-center font-[Quicksand]">
+        
+        {/* Pulsing Glowing Heart */}
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.25, 1],
+            opacity: [0.8, 1, 0.8]
+          }} 
+          transition={{ 
+            duration: 1.5, 
+            repeat: Infinity,
+            ease: "easeInOut"
+          }} 
+          className="relative flex items-center justify-center"
+        >
+          {/* Background Glow */}
+          <div className="absolute inset-0 bg-pink-400 blur-2xl opacity-40 rounded-full scale-150"></div>
+          
+          {/* Main Heart Emoji */}
+          <div className="text-6xl drop-shadow-lg relative z-10">💖</div>
+        </motion.div>
+
+        {/* Fading Loading Text */}
+        <motion.p
+          animate={{ opacity: [0.4, 1, 0.4] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+          className="mt-8 text-pink-500 font-bold tracking-widest uppercase text-xs z-10"
+        >
+          Preparing your surprise... ✨
+        </motion.p>
+
       </div>
     );
   }
