@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 💌 LoveBae - Digital Gifting App
 
-## Getting Started
+LoveBae is an interactive, multi-step digital gifting platform where users can create personalized digital "Love Cards" for their partners.
 
-First, run the development server:
+## 🌐 Live Links
+* **Main App URL:** [https://lovebaelink.jshub.shop/](https://lovebaelink.jshub.shop/)
+* **Demo Love Card:** [https://lovebaelink.jshub.shop/gift/32jpa3](https://lovebaelink.jshub.shop/gift/32jpa3)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🛠️ Tech Stack
+* **Frontend:** Next.js (App Router), React, Tailwind CSS
+* **Animations:** Framer Motion
+* **Database:** Firebase Firestore
+* **Payments:** Razorpay (Direct UPI Payment Links)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
+* **Interactive Builder:** A smooth 4-step UI for creating personalized cards.
+* **Mini-Games:** Custom engagement features like a Love Meter and Balloon Pop.
+* **Direct-to-App Payment UI:** Utilizes Razorpay UPI Intent links to open GPay, PhonePe, or Paytm directly without login friction.
+* **Instant Link Generation:** Generates a unique, dynamic URL immediately after the payment verification step.
+* **Responsive Design:** Mobile-first approach, fully styled with Tailwind CSS.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🚀 Local Setup & Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/abhisheksamriya/LoveBaeLink
+   cd LoveBaeLink
+   ```
 
-## Learn More
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Set up Environment Variables:**
+   Create a `.env.local` file in the root directory and add your Firebase credentials:
+   ```env
+   NEXT_PUBLIC_FIREBASE_API_KEY=your_api_key
+   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=your_auth_domain
+   NEXT_PUBLIC_FIREBASE_PROJECT_ID=your_project_id
+   NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+   NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+   NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Start the development server:**
+   ```bash
+   npm run dev
+   ```
+   The app will be available at `http://localhost:3000`.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 💸 Payment Integration (Smart Friction Architecture)
 
-## Deploy on Vercel
+To enable an instant launch without waiting for business API key approvals, this app uses a smart "Friction UI" architecture:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* **Zero-Login Payments:** Uses Razorpay "UPI Payment Links" (Intent links) so users bypass manual detail entry and jump straight into their UPI apps.
+* **State-Based Verification:** The UI uses a `hasClickedPay` state to track if the user has clicked the "Pay Securely" button.
+* **Controlled Access:** The final "Get Link" button remains disabled until the payment intent is triggered. Once clicked, a document is created in Firebase (with `paid: true`) and the shareable link is generated.
+* **Manual Audit:** The admin performs a daily audit matching total Firebase records with actual successful payments on the Razorpay dashboard. Any discrepancies (unpaid fake entries) are manually deleted from Firebase, instantly deactivating the associated digital card.
